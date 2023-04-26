@@ -1,0 +1,84 @@
+#include <iostream>
+#include<string.h>
+using namespace std;
+
+    
+class FlightBooking {
+    public:
+        FlightBooking(int id, int capacity, int reserved);
+        void printStatus();
+        void set(int id, int capacity, int reserved);
+        void add(int x);
+        void cancel(int x);
+        void quit();
+        private:
+        int id;
+        int capacity;
+        int reserved;
+};
+void FlightBooking::printStatus(){
+    double percentage = reserved * 100 / capacity;
+    cout << "Flight " << "[" << this -> id << "]; " << "[" << this -> reserved << "]" << '/' << "[" << this -> capacity << "];" << " [" << percentage << "%];";
+}
+FlightBooking::FlightBooking(int id, int capacity, int reserved){
+    set(id, capacity, reserved);
+}
+void FlightBooking::set(int id, int capacity, int reserved) {
+        this -> id = id;
+        this -> capacity = capacity;
+        this -> reserved = reserved;
+}
+
+void FlightBooking::add(int x){
+    if(x < 0) x = 0;
+    else if((reserved + x) * 100 / capacity >= 105){
+    cout << "The plane doesn't have such amount of seats";
+    } 
+    else this -> reserved += x;
+}
+
+void FlightBooking::cancel(int x){
+    if(this -> reserved < x){
+        cout << "Can't cancel this amount of places";
+    } else
+    this -> reserved -= x;
+}
+
+void FlightBooking::quit(){
+    return;
+}
+
+int main() {
+int reserved = 0,
+    capacity = 0;
+    
+cout << "Provide flight capacity: ";
+cin >> capacity;
+cout << "Provide number of reserved seats: ";
+cin >> reserved;
+
+FlightBooking booking(1, capacity, reserved);
+string command = "";
+while (true){
+
+    cout << "Insert your command:";
+    cin >> command;
+    if(command == "quit"){
+        booking.quit();
+    }
+    int number;
+    cout << "Insert your number:";
+    cin >> command;
+
+    if(command == "add"){
+        booking.add(number);
+    }
+
+    if(command == "cancel"){
+        booking.cancel(number);
+    }
+}
+
+booking.printStatus();
+return 0;
+}
